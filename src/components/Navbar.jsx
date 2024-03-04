@@ -13,11 +13,15 @@ const Navbar = () => {
     fileInputRef.current.click();
   };
 
+  const handleLogoClick = () => {
+    window.location.reload();
+  }
+
   return (
     <>
       <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <div className="flex">
+          <div className="flex cursor-pointer" onClick={handleLogoClick}>
             <img src="RDV_Logo.png" className="h-10" alt="Rule-D Validator" />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white ml-3">
               Rule-D Validator

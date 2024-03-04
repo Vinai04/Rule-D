@@ -6,12 +6,25 @@ import { FaFileAlt } from "react-icons/fa";
 const FileDropZone = () => {
   const { file, setFile } = useContext(DataContext);
 
-  const handleChange = (event) => {
+  const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFile = event.dataTransfer.files[0];
+    setFile(droppedFile);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div className="flex flex-colitems-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+    <div className="flex flex-colitems-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+    >
       {!file ? (
         <label htmlFor="dropzone-file" className="flex">
           <div className="flex flex-col items-center justify-center pt-5 pb-6 cursor-pointer">
@@ -42,7 +55,7 @@ const FileDropZone = () => {
             id="dropzone-file"
             type="file"
             className="hidden"
-            onChange={handleChange}
+            onChange={handleFileChange}
           />
         </label>
       ) : (

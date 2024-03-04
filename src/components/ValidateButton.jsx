@@ -2,20 +2,19 @@ import React, { useContext, useState } from "react";
 import DataContext from "../contexts/DataContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import * as acorn from 'acorn';
+import * as acorn from "acorn";
 
 const ValidateButton = () => {
   const { file, setFile } = useContext(DataContext);
   const { output, setOutput } = useContext(DataContext);
 
   const Validator = async () => {
-    
     const getExtension = (fileName) => {
-      const parts = fileName.split('.');
-      return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : '';
+      const parts = fileName.split(".");
+      return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
     };
 
-    const filetype = getExtension(file.name)
+    const filetype = getExtension(file.name);
 
     if (file) {
       try {
@@ -37,7 +36,7 @@ const ValidateButton = () => {
             theme: "dark",
           });
         } else if (fileName.endsWith(".js")) {
-          const ast = acorn.parse(fileContent, { ecmaVersion: 'latest' });
+          const ast = acorn.parse(fileContent, { ecmaVersion: "latest" });
           console.log("Valid JavaScript file:", fileContent);
           setOutput(fileContent);
           toast.success("This file is a Valid Javascript file!", {

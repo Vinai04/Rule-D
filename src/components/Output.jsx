@@ -1,8 +1,47 @@
 import React, { useContext, useState } from "react";
 import DataContext from "../contexts/DataContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Output = () => {
   const { output, setOutput } = useContext(DataContext);
+
+  const handleCopyToClipboard = () => {
+    // Check if the Clipboard API is available
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(output)
+        .then(() => {
+          console.log("Code copied to clipboard");
+          toast.info("Code copied to clipboard", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        })
+        .catch((error) => {
+          console.error("Error copying code to clipboard:", error);
+          toast.error("Error copying code to clipboard", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        });
+    } else {
+      // Fallback for browsers that don't support the Clipboard API
+      document.execCommand("copy");
+      console.log("Code copied to clipboard (fallback)");
+    }
+  };
 
   return (
     <>
@@ -12,6 +51,7 @@ const Output = () => {
             <div className="overflow-scroll max-h-72">{output}</div>
             <div className="absolute top-2 end-2 bg-gray-50 dark:bg-gray-200">
               <button
+                onClick={handleCopyToClipboard}
                 data-copy-to-clipboard-target="code-block"
                 data-copy-to-clipboard-content-type="innerHTML"
                 data-copy-to-clipboard-html-entities="true"
