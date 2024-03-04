@@ -14,9 +14,8 @@ const ValidateButton = () => {
       return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : "";
     };
 
-    const filetype = getExtension(file.name);
-
     if (file) {
+      const filetype = getExtension(file.name);
       try {
         const fileContent = await readFileContent(file);
         const fileName = file.name.toLowerCase();
